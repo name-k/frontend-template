@@ -1,0 +1,51 @@
+# Project specific folders
+node_modules/
+bower_components/
+bower/
+psd/
+vendor/
+public/
+
+# Common files to ignore
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# OS and Editors
+.DS_Store
+.idea
+.cache
+.project
+.settings
+.tmproj
+.nvmrc
+*.sublime-workspace
+sftp-config.json
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
