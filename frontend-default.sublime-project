@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+    {
+      "path": ".",
+      "name": "root files",
+      "folder_exclude_patterns" : [
+        "*"
+      ]
+    },
+		{
+			"path": "./src",
+      "name": "source files",
+      "folder_exclude_patterns" : []
+		}
+	]
+}
