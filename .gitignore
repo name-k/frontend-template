@@ -1,5 +1,6 @@
 # Project specific folders
 node_modules/
+build/
 bower_components/
 bower/
 psd/
