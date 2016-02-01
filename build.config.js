@@ -1,9 +1,18 @@
-const dir = {
-  root  : './',
-  src   : 'html/src/',
-  build : 'html/build/',
-  wp    : 'www/wp-content/themes/webhelper/',
-};
+'use strict';
+
+let dir = {};
+
+dir.root   = './';
+dir.src    = dir.root + 'src/';
+dir.build  = dir.root + 'build/';
+dir.stl    = dir.src + 'stl/';
+dir.tpl    = dir.src + 'tpl/';
+dir.js     = dir.src + 'js/';
+dir.fonts  = dir.src + 'fonts/';
+dir.img    = dir.src + 'img/';
+dir.dsgn   = dir.src + 'img/design/';
+dir.svg    = dir.src + 'img/svg/';
+dir.imggag = dir.src + 'img/gag/';
 
 module.exports = {
   dir : dir,
@@ -12,32 +21,33 @@ module.exports = {
       // all js paths are in webpack config
     },
     styles: {
-      watch   : dir.root + dir.src + 'styles/**/*.*',
-      process : dir.root + dir.src + 'styles/main.*',
-      build   : dir.root + dir.build + 'css/',
-      wp      : dir.root + dir.wp + 'css/',
+      watch   : dir.stl + '**/*.*',
+      process : dir.stl + 'main.*',
+      build   : dir.build + 'css/',
     },
     templates : {
-      watch   : dir.root + dir.src + 'tpl/**/*.*',
-      process : dir.root + dir.src + 'tpl/!(_)*.html',
-      build   : dir.root + dir.build,
+      watch   : dir.tpl + '**/*.*',
+      process : dir.tpl + '!(_)*.jade',
+      build   : dir.build,
     },
     fonts : {
-      process : dir.root + 'bower_components/font-awesome/fonts/*',
-      build   : dir.root + dir.build + 'fonts/',
-      wp   : dir.root + dir.wp + 'fonts/',
+      process : dir.fonts + '**.*',
+      build   : dir.build + 'fonts/',
     },
     img : {
-      watch   : dir.root + dir.src + 'img/**/*.@(jpg|jpeg|png|gif)',
-      process : dir.root + dir.src + 'img/**/*.@(jpg|jpeg|png|gif)',
-      build   : dir.root + dir.build + 'img/',
-      wp      : dir.root + dir.wp + 'img/',
+      watch   : dir.dsgn + '**/*.@(jpg|jpeg|png|gif)',
+      process : dir.dsgn + '**/*.@(jpg|jpeg|png|gif)',
+      build   : dir.build + 'img/',
       svg : {
-        watch   : dir.root + dir.src + '**/*.svg',
-        process : dir.root + dir.src + '**/*.svg',
-        build   : dir.root + dir.build + 'svg/',
-        wp      : dir.root + 'www/svg/',
+        watch   : dir.svg + '**/*.svg',
+        process : dir.svg + '**/*.svg',
+        build   : dir.build + 'img/svg/',
       },
+      gag : {
+        watch   : dir.imggag + '**/*.@(jpg|jpeg|png|gif)',
+        process : dir.imggag + '**/*.@(jpg|jpeg|png|gif)',
+        build   : dir.build + 'pic/',
+      }
     },  
   }
   

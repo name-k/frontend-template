@@ -5,10 +5,8 @@ const
   plugins       = require('gulp-load-plugins')({}),
   path          = require('path'),
   webpack       = require('webpack'),
-  webpackStream = require('webpack-stream'),
   browserSync   = require('browser-sync'),
   chokidar      = require('chokidar'),
-  panini        = require('panini'),
   run           = require('run-sequence');
 
 const 
@@ -32,7 +30,7 @@ gulp.task('styles', () => {
       browsers: ['> 1%'],
       cascade: false
     }))
-    .pipe(NODE_ENV == 'prod' ? plugins.cssnano() : '')
+    .pipe(plugins.if(NODE_ENV == 'prod', plugins.cssnano()))
     .pipe(plugins.sourcemaps.write('./'))
     .pipe(gulp.dest(paths.styles.build))
     .pipe(browserSync.stream({match: '**/*.css'}))
@@ -45,19 +43,15 @@ gulp.task('styles', () => {
 
 
 gulp.task('templates', () => {
+  let data = require(config.dir.tpl + 'content-data/data.js');
   return gulp.src(paths.templates.process)
     .pipe(plugins.plumber({
       errorHandler: plugins.notify.onError('Templates task error: <%= error.message %>')
     }))
-    .pipe(panini({
-      root     : config.dir.src + 'tpl/',
-      layouts  : config.dir.src + 'tpl/layouts/',
-      partials : config.dir.src + 'tpl/partials/',
-      helpers  : config.dir.src + 'tpl/helpers/',
-      data     : config.dir.src + 'tpl/data/',
+    .pipe(plugins.jade({
+      locals : data,
+      pretty : NODE_ENV == 'prod' ? true : false,
     }))
-    .pipe(NODE_ENV == 'prod' ? plugins.htmlclean() : '')
-    .pipe(NODE_ENV == 'prod' ? plugins.jsbeautifier({indentSize: 2}) : '')
     .pipe(gulp.dest(paths.templates.build))
     .pipe(plugins.notify({
       title: 'Templates',
@@ -96,12 +90,24 @@ gulp.task('img', () => {
 });
 
 gulp.task('svg', () => {
+  let
+    svgTemplatesPath = path.resolve(config.dir.img, 'svg-sprite-templates/'),
+    stylesTemplate = path.join(svgTemplatesPath, 'svg-icons.css'),
+    svgTemplate = path.join(svgTemplatesPath, 'svg-icons.svg');
+
   gulp.src(paths.img.svg.process)
     .pipe(plugins.plumber({
       errorHandler: plugins.notify.onError('Error: <%= error.message %>')
     }))
-    .pipe(plugins.svgSymbols())
+    .pipe(plugins.svgSymbols({
+      id : '%f',
+      className : '.svg-icon_%f',
+      templates : [stylesTemplate, svgTemplate],
+      title : false,
+    }))
+    // only for svg file
     .pipe(gulp.dest(paths.img.svg.build))
+    // only for css file
     .pipe(plugins.notify({
       title: 'SVG Images',
       onLast: true
@@ -144,7 +150,7 @@ gulp.task('server', () => {
     notify    : false,
     logLevel  : 'info',
     logPrefix : 'BrowserSync',
-    online    : true, // increases startup time 
+    online    : false, // increases startup time 
   });
 });
 
@@ -171,8 +177,6 @@ gulp.task('watch', () => {
   chokidar
     .watch(paths.templates.watch, {ignoreInitial : true})
     .on('change', (event, path) => {
-      // refrest panini file index
-      panini.refresh();
       run('templates', browserSync.reload);
     });
 });
@@ -192,7 +196,7 @@ gulp.task('processNonStatic', () => {
   run(['templates', 'styles', 'js']);
 });
 gulp.task('processStatic', () => {
-  run(['img', 'fonts', 'svg']);
+  run(['img', 'fonts']);
 });
 
 

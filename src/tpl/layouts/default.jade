@@ -1,0 +1,33 @@
+doctype html
+
+html(lang="en-EN")
+
+  block vars
+
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="x-ua-compatible", content="ie=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    //- meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0")
+    //- meta(http-equiv="imagetoolbar", content="no")
+    //- meta(http-equiv="cleartype", content="on")
+    //- meta(name="format-detection", content="telephone=no")
+    //- meta(name="format-detection", content="address=no")
+
+    title #{metaTitle ? metaTitle : ''}
+    meta(name="description", content="#{metaDescription ? metaDescription : ''}")
+    meta(name="keywords", content="#{metaKeywords ? metaKeywords : ''}")
+    
+    link(
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+      href="css/main.css"
+    )
+
+  
+  body(class="#{bodyClass ? bodyClass : ''}")
+
+    block content
+
+    script(src="js/bundle.js")

@@ -10,7 +10,7 @@ const NODE_WATCH = process.env.NODE_WATCH != 'false';
 
 
 let jsDefaultConfig = {
-  context : path.resolve(__dirname, config.dir.src, 'js/'),
+  context : path.resolve(__dirname, config.dir.js),
   
   entry : {
     bundle : './app'
@@ -37,10 +37,7 @@ let jsDefaultConfig = {
     root : [
       path.join(__dirname)
     ],
-    modulesDirectories : [
-      'node_modules', 
-      path.join(config.dir.src, 'js')
-      ],
+    modulesDirectories : ['node_modules', config.dir.js],
     extensions         : ['', '.js']
   },
 
@@ -75,10 +72,10 @@ let jsDefaultConfig = {
     new webpack.DefinePlugin({
       NODE_ENV : JSON.stringify(NODE_ENV),
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name : 'common',
-      minChunks : 2,
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name : 'common',
+    //   minChunks : 2,
+    // }),
   ],
 
 };
