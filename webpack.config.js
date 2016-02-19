@@ -5,8 +5,6 @@ const
   path = require('path');
 
 const config = require('./build.config.js');
-const NODE_ENV = process.env.NODE_ENV || 'dev';  
-const NODE_WATCH = process.env.NODE_WATCH != 'false';  
 
 
 let jsDefaultConfig = {
@@ -16,14 +14,14 @@ let jsDefaultConfig = {
     bundle : './app'
   },
   output : {
-    path : path.resolve(__dirname, config.dir.build, 'js/'),
+    path : config.paths.js.absoluteRoot,
     filename : '[name].js',
-    publicPath : '/js/',
+    publicPath : config.paths.js.publicJS,
     library : '[name]',
   },
 
   // watch files change
-  watch : NODE_WATCH, 
+  watch : config.flags.shouldWatch, 
   watchOptions : {
     // timeout until update
     aggregateTimeout : 100, 
@@ -31,7 +29,7 @@ let jsDefaultConfig = {
 
   // should use 'cheap-inline-module-source-map' if readability is important
   // 'eval' is for super speed
-  devtool : NODE_ENV == 'dev' ? 'cheap-inline-module-source-map' : null, 
+  devtool : config.flags.isDev ? 'cheap-module-inline-source-map' : null, 
 
   resolve : {
     root : [
@@ -45,16 +43,16 @@ let jsDefaultConfig = {
   // and include in before all other stuff
   // https://cdn.polyfill.io/v2/polyfill.min.js
 
-  resolveLoader : {
-    modulesDirectories : ['node_modules'],
-    moduleTemplates    : ['*-loader'],
-    extensions         : ['', '.js'] 
-  },
+  // resolveLoader : {
+  //   modulesDirectories : ['node_modules'],
+  //   moduleTemplates    : ['*-loader'],
+  //   extensions         : ['', '.js'] 
+  // },
 
   module : {
     loaders : [{
       test    : /\.js$/,
-      exclude : /(node_modules|bower_components)/,
+      include : config.dir.js,
       loader  : 'babel?presets[]=es2015',
     }],
 
@@ -70,18 +68,15 @@ let jsDefaultConfig = {
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      NODE_ENV : JSON.stringify(NODE_ENV),
+      NODE_ENV : JSON.stringify(config.flags.mode),
     }),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name : 'common',
     //   minChunks : 2,
     // }),
   ],
-
 };
-
-
-if(NODE_ENV == 'prod') {
+if(config.flags.isProd) {
   jsDefaultConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress : {

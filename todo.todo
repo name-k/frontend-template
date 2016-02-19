@@ -1,3 +1,7 @@
-Tasks to do: 
-  ☐ minify svg output
+Build: 
+  ✔ minify svg output @done (2016-02-19 23:45)
+  ☐ make rev names for longterm caching
+
+Modules:
   ☐ js module to lazyload google fonts
+  ☐ get rid of jquery in plugins

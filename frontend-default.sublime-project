@@ -8,9 +8,14 @@
         "*"
       ]
     },
-		{
-			"path": "./src",
+    {
+      "path": "./src",
       "name": "source files",
+      "folder_exclude_patterns" : []
+    },
+		{
+			"path": "./tasks",
+      "name": "gulp tasks",
       "folder_exclude_patterns" : []
 		}
 	]
