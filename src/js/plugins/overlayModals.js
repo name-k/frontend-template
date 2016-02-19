@@ -1,4 +1,4 @@
-const assign = require('lodash/object/assign');
+const assign = require('lodash/assign');
 import $ from 'jquery';
 
 export default class Overlay {

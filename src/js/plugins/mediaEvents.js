@@ -1,7 +1,7 @@
 import $ from 'jquery';
-const assign = require('lodash/object/assign');
-const debounce = require('lodash/function/debounce');
-const bindAll = require('lodash/function/bindAll');
+const assign = require('lodash/assign');
+const debounce = require('lodash/debounce');
+const bindAll = require('lodash/bindAll');
 
 export default class MediaEvents {
 
