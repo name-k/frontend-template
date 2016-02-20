@@ -7,13 +7,17 @@ module.exports = function(options) {
   return function() {
     return combiner(
       gulp.src(options.src),
+      $.cached('svg'),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':src'})),
+      $.remember('svg'),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':remembered'})),
       $.svgSymbols({
         id : '%f',
         className : '.svg-icon_%f',
         templates : [options.cssTemplate, options.svgTemplate],
         title : false,
       }),
-        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName})),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':processed'})),
       $.if('*.{css,sass,scss,less,styl}', gulp.dest('./tmp/styles'), gulp.dest(options.dest))
     ).on('error', $.notify.onError(function(err) {
       console.log(err);
