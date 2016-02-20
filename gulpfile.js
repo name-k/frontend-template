@@ -23,7 +23,7 @@ let lazyTask = function(taskName, path, options) {
     let task = require(path).call(this, options);
     return task(callback);
   });
-}
+};
 
 
 lazyTask('server', './tasks/server', {
