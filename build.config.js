@@ -6,6 +6,7 @@ let dir = {};
 dir.root   = './';
 dir.src    = path.join(dir.root, 'src');
 dir.build  = path.join(dir.root, 'build');
+dir.tmp    = path.join(dir.root, 'tmp');
 dir.stl    = path.join(dir.src, 'stl');
 dir.tpl    = path.join(dir.src, 'tpl');
 dir.js     = path.join(dir.src, 'js');

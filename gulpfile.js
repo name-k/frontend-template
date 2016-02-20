@@ -23,7 +23,7 @@ function lazyTask(taskName, path, options) {
   gulp.task(taskName, function(callback) {
     let task = require(path).call(this, options);
     return task(callback);
-  })
+  });
 }
 
 
@@ -32,7 +32,7 @@ lazyTask('server', './tasks/server', {
 });
 
 lazyTask('clean', './tasks/clean', {
-  src : config.dir.build
+  src : [config.dir.build, config.dir.tmp]
 });
 
 lazyTask('images', './tasks/images', {
@@ -112,33 +112,3 @@ gulp.task('fastdev', gulp.series('build:main', gulp.parallel('watch:main', 'serv
 
 
 
-// // Tasks
-// gulp.task('default', [], () => {
-//   console.warn(`>>> You should not use 'gulp' directly`);
-//   console.info(`>>> Run 'npm run prod' for production build and 'gulp dev' for full developer environment.`);
-//   console.info(`>>> Run 'npm run dev' to start quickly without cleaning and processing static files.`);
-//   console.warn(`>>> If you are on Windows machine, use 'win-' prefix before npm scripts, like this 'npm run win-dev'`);
-// });
-
-
-// gulp.task('processNonStatic', () => {
-//   run(['templates', 'styles', 'js']);
-// });
-// gulp.task('processStatic', () => {
-//   run(['img', 'fonts']);
-// });
-
-
-// gulp.task('build', () => {
-//   run('clean', ['processNonStatic', 'processStatic']);
-// });
-
-
-// gulp.task('dev', () => {
-//   run('build', 'server', 'watch');
-// });
-
-
-// gulp.task('quick', () => {
-//   run('processNonStatic', 'server', 'watch');
-// });

@@ -11,7 +11,7 @@ Though, it should be easy enough to look at gulpfile.js and ./tasks to understan
 - tasks for: templates, styles, rasterized images, svg, any other static assets
 - combined tasks for full dev launch and quick start on existing project
 
-## First thing to do
+## First things to do
 - clone the repo
 - setup paths in ./build.config.js
 - setup webpack config in ./tasks/js.js
@@ -28,5 +28,5 @@ Also you can run tasks with ```npm script```
 - revision naming for longterm caching support
 - get rid of jquery, completely (also includes update of all plugins in ./src/js/
 plugins)
-- wrap some more of my everyday-useful scripts into ES6 classes and optimize already existing (because they are not)
+- wrap some more of my everyday-useful scripts with ES6 classes and optimize that what already exist (because they are not)
 

@@ -18,7 +18,9 @@ module.exports = function(options) {
         title : false,
       }),
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':processed'})),
-      $.if('*.{css,sass,scss,less,styl}', gulp.dest('./tmp/styles'), gulp.dest(options.dest))
+      $.if('*.{css,sass,scss,less,styl}', 
+        gulp.dest(path.join(dir.tmp, 'styles'), 
+        gulp.dest(options.dest))
     ).on('error', $.notify.onError(function(err) {
       console.log(err);
         return {
