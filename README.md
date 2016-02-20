@@ -3,10 +3,10 @@ This template is created and supported according to my own tasks and needs.
 You are welcome to use it, but I'm not really into writing full docs right now. 
 Though, it should be easy enough to look at gulpfile.js and ./tasks to understand what is going on.
 
-This project template will work for you if you are:
-- write JS in ES2015 and modulirize everything
-- use eslint for linting in your editor, not in the console (ST3 works best for me)
-- like to configure every tiny detail (like myself)
+This project template will work for you if:
+- you write JS in ES2015 and modularize everything
+- you use eslint for linting in your editor, not in the console (ST3 works best for me)
+- you like to configure every tiny detail (like myself)
 
 ## Noticeable features
 - lazy gulp modules load
@@ -14,9 +14,9 @@ This project template will work for you if you are:
 - webpack with babel for js
 - tasks for: templates, styles, rasterized images, svg, any other static assets
 - combined tasks for full dev launch and quick start on existing project
-- NODE_ENV=dev|prod|{whatever}, default - dev
-- NODE_WATCH=true|false, default - true
-- NODE_DEBUG=true|false, default - false (will write debug details for tasks)
+- ```NODE_ENV=dev|prod|{whatever}```, default - dev
+- ```NODE_WATCH=true|false```, default - true
+- ```NODE_DEBUG=true|false```, default - false (will write debug details for tasks)
 - webpack works as webpack does, not as gulp stream, also uses built in watcher
 
 ## Steps to start
