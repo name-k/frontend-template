@@ -12,9 +12,8 @@ require('trace');
 require('clarify');
 
 
-
 // performs lazy load for tasks
-function lazyTask(taskName, path, options) {
+let lazyTask = function(taskName, path, options) {
   if(!options) {
     let options = {};
   }
