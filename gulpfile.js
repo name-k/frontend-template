@@ -8,9 +8,10 @@ const
 
 const config = require('./build.config.js');
 
-require('trace');
-require('clarify');
-
+if(config.flags.debug) {
+  require('trace');
+  require('clarify');
+}
 
 // performs lazy load for tasks
 let lazyTask = function(taskName, path, options) {
@@ -42,6 +43,7 @@ lazyTask('images', './tasks/images', {
 lazyTask('svg', './tasks/svg', {
   src         : config.paths.svg.src,
   dest        : config.paths.svg.dest,
+  tmp         : config.dir.tmp,
   svgTemplate : config.paths.svg.templates.svg,
   cssTemplate : config.paths.svg.templates.css,
 });
@@ -52,7 +54,7 @@ lazyTask('styles', './tasks/styles', {
 });
 
 lazyTask('templates', './tasks/templates', {
-  src : config.paths.templates.src,
+  src  : config.paths.templates.src,
   dest : config.paths.templates.dest,
   data : require(path.resolve(config.dir.tpl, 'content-data/data.js')),
 });
@@ -75,25 +77,21 @@ lazyTask('js', './tasks/js', config);
 
 gulp.task('watch:main', function() {
   if(config.flags.shouldWatch) {
-    return gulp.parallel(
-      gulp.watch(config.paths.js.watch, gulp.series('js')),
-      gulp.watch(config.paths.styles.watch, gulp.series('styles')),
-      gulp.watch(config.paths.templates.watch, gulp.series('templates'))
-    );  
+    gulp.watch(config.paths.js.watch, gulp.series('js'));
+    gulp.watch(config.paths.styles.watch, gulp.series('styles'));
+    gulp.watch(config.paths.templates.watch, gulp.series('templates'));
   }
 });
 gulp.task('watch:assets', function() {
   if(config.flags.shouldWatch) {
-    return gulp.parallel(
-      gulp.watch(config.paths.img.watch, gulp.series('images')),
+      gulp.watch(config.paths.img.watch, gulp.series('images'));
       gulp.watch(config.paths.svg.watch, gulp.series('svg'))
         .on('unlink', function(filepath) {
           $.remember('svg').forget(path.resolve(filepath));
           delete $.cached.caches.svg[path.resolve(filepath)];
-        }),
-      gulp.watch(config.paths.fonts.watch, gulp.series('fonts')),
-      gulp.watch(config.paths.imggag.watch, gulp.series('imggag'))
-    );
+        });
+      gulp.watch(config.paths.fonts.watch, gulp.series('fonts'));
+      gulp.watch(config.paths.imggag.watch, gulp.series('imggag'));
   }
 });
 gulp.task('watch', gulp.parallel('watch:main', 'watch:assets'));
@@ -106,7 +104,7 @@ gulp.task('build:assets', gulp.parallel('fonts', 'images', 'svg', 'imggag'));
 gulp.task('build', gulp.parallel('build:main', 'build:assets'));
 
 
-gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'server')));
+gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'server')));
 gulp.task('fastdev', gulp.series('build:main', gulp.parallel('watch:main', 'server')));
 
 

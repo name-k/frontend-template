@@ -39,8 +39,8 @@ module.exports = {
       dest  : path.join(dir.build, 'css'),
     },
     templates : {
-      watch : dir.tpl + '**/*.*',
-      src   : dir.tpl + '!(_)*.jade',
+      watch : path.join(dir.tpl, '**/*.*'),
+      src   : path.join(dir.tpl, '!(_)*.jade'),
       dest  : dir.build,
     },
     fonts : {
@@ -68,4 +68,4 @@ module.exports = {
     },  
   }
   
-}
+};

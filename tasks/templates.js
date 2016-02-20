@@ -7,12 +7,14 @@ module.exports = function(options) {
   return function() {
     return combiner(
       gulp.src(options.src, {since : gulp.lastRun(options.taskName)}),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':src'})),
       $.jade({
         locals : options.data,
-        pretty : options.vars.isProd,
+        pretty : options.flags.isProd,
       }),
-        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName})),
-      gulp.dest(options.dest)
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':compiled'})),
+      gulp.dest(options.dest),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':dest'}))
     ).on('error', $.notify.onError(function(err) {
       console.log(err);
         return {

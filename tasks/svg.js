@@ -1,5 +1,6 @@
 const 
   gulp     = require('gulp'),
+  path     = require('path'),
   combiner = require('stream-combiner2').obj,
   $        = require('gulp-load-plugins')();
 
@@ -19,7 +20,7 @@ module.exports = function(options) {
       }),
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':processed'})),
       $.if('*.{css,sass,scss,less,styl}', 
-        gulp.dest(path.join(dir.tmp, 'styles'), 
+        gulp.dest(path.join(options.tmp, 'styles')), 
         gulp.dest(options.dest))
     ).on('error', $.notify.onError(function(err) {
       console.log(err);
