@@ -1,11 +1,11 @@
 {
-  "name": "project-template",
-  "version": "0.1.1",
+  "name": "frontend-project-template",
+  "version": "0.1.2",
   "description": "",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "dependencies": {
-    "jquery": "^2.2.0",
-    "lodash": "^4.5.0"
+    "jquery": "*",
+    "lodash": "*"
   },
   "devDependencies": {
     "babel-core"          : "*",
@@ -44,18 +44,18 @@
     "webpack"             : "*"
   },
   "scripts": {
-    "test": "echo \"No tests provided\"",
-    "dev": "gulp dev",
-    "fast": "gulp fast",
-    "prod": "NODE_ENV=prod NODE_WATCH=false gulp build",
-    "win-prod": "SET \"NODE_ENV=prod\" && SET \"NODE_WATCH=false\" && gulp build"
+    "test"     : "echo \"No tests provided\"",
+    "dev"      : "./node_modules/.bin/gulp dev",
+    "debug"    : "NODE_DEBUG=true gulp dev",
+    "fast"     : "./node_modules/.bin/gulp fastdev",
+    "prod"     : "NODE_ENV=prod NODE_WATCH=false gulp build",
+    "win-prod" : "SET \"NODE_ENV=prod\" && SET \"NODE_WATCH=false\" && gulp build"
   },
   "repository": {
-    "type": "git",
-    "url": "git@github.com:name-k/frontend-template.git",
-    "gulp": "./node_modules/.bin/gulp"
+    "type" : "git",
+    "url"  : "git@github.com:name-k/frontend-template.git"
   },
   "author": "name-k",
-  "license": "nope",
+  "license": "did not decide yet, use as-is",
   "homepage": "https://github.com/name-k/frontend-template"
 }
