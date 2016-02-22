@@ -32,10 +32,13 @@ If you are not willing to install the alpha version globally, you should run all
 The better option is to add ```./node_modules/.bin``` to your path variable, so when you call ```gulp``` in the project folder - local gulp will be used, otherwise - global (if you have it installed globally). 
 Also you can setup tasks to run with ```npm script```, something like that ```"<taskName>" : "./node_modules/.bin/gulp <yourtask>"```.
 
+*gulp-sass does not work well with gulp4 yet, so for now you should use gulp-ruby-sass with sass being installed from ruby gem*
+
 ## TODO
 - webpack dev server and hot module replacement
 - revision naming for longterm caching support
 - get rid of jquery, completely (also includes update of all plugins in ./src/js/
 plugins)
 - wrap some more of my everyday-useful scripts with ES6 classes and optimize that what already exist (because they are not)
+- move plugins to separate npm packages for each plugin
 

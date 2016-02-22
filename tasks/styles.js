@@ -4,15 +4,11 @@ const
   $        = require('gulp-load-plugins')();
 
 module.exports = function(options) {
-  return function() {
+  return function(callback) {
     return combiner(
-      gulp.src(options.src),
-        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':src'})),
+      $.rubySass(options.src, {sourcemap: options.flags.isDev}),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':rubySass'})),
         
-      $.if(options.flags.isDev, $.sourcemaps.init()),
-      $.sass(),
-        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':sass'})),
-
       $.autoprefixer({browsers: ['> 1%'], cascade: false}),
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':autoprefixer'})),
 
@@ -23,7 +19,13 @@ module.exports = function(options) {
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':cssnano'})),
 
       gulp.dest(options.dest),
-      $.notify({title: 'Styles', onLast: true})
+      $.notify({
+        title: 'Styles', 
+        onLast: true, 
+        notifier() {
+          callback();
+        }
+      })
     ).on('error', $.notify.onError(function(err) {
       return {
         title : 'Styles',
@@ -31,4 +33,4 @@ module.exports = function(options) {
       };
     }));  
   };
-}
+};
