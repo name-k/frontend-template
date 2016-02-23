@@ -2,17 +2,21 @@
 
 const path = require('path');
 
-let dir = {};
-dir.root   = './';
+let dir = {
+  root : './'
+};
+
+// main dirs
 dir.src    = path.join(dir.root, 'src');
 dir.build  = path.join(dir.root, 'build');
 dir.tmp    = path.join(dir.root, 'tmp');
+
+// src dirs
 dir.stl    = path.join(dir.src, 'stl');
 dir.tpl    = path.join(dir.src, 'tpl');
 dir.js     = path.join(dir.src, 'js');
 dir.fonts  = path.join(dir.src, 'fonts');
 dir.img    = path.join(dir.src, 'img');
-dir.svg    = path.join(dir.src, 'svg');
 dir.dsgn   = path.join(dir.src, 'img/design');
 dir.svg    = path.join(dir.src, 'img/svg');
 dir.imggag = path.join(dir.src, 'img/pic');

@@ -6,7 +6,7 @@ const
 module.exports = function(options) {
   return function() {
     return combiner(
-      gulp.src(options.src, {since : gulp.lastRun(options.taskName)}),
+      gulp.src(options.src),
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':src'})),
       $.jade({
         locals : options.data,

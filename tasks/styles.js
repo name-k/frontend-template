@@ -6,8 +6,15 @@ const
 module.exports = function(options) {
   return function(callback) {
     return combiner(
-      $.rubySass(options.src, {sourcemap: options.flags.isDev}),
-        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':rubySass'})),
+
+      gulp.src(options.src),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':src'})),
+
+      $.if(options.flags.isDev, $.sourcemaps.init()),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':sourcemaps:init'})),
+
+      $.sass(),
+        $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':sass'})),
         
       $.autoprefixer({browsers: ['> 1%'], cascade: false}),
         $.if(options.flags.debug, $.debug({title : 'DEBUG ' + options.taskName + ':autoprefixer'})),

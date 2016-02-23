@@ -1,6 +1,6 @@
 {
   "name": "frontend-project-template",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
@@ -32,7 +32,7 @@
     "gulp-plumber": "*",
     "gulp-postcss": "*",
     "gulp-remember": "*",
-    "gulp-ruby-sass": "*",
+    "gulp-sass": "*",
     "gulp-sourcemaps": "*",
     "gulp-svg-symbols": "*",
     "gulp-util": "*",

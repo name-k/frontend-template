@@ -1,11 +1,11 @@
 # Project specific folders
 node_modules/
 build/
-bower_components/
-bower/
-psd/
-vendor/
 public/
+tmp/
+bower_components/
+vendor/
+psd/
 
 # Common files to ignore
 *.diff

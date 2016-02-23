@@ -1,7 +1,7 @@
 'use strict';
 
 const
-  gulp    = require('gulp'),
+  path    = require('path'),
   browserSync = require('browser-sync').create();
 
 module.exports = function(options) {
@@ -18,6 +18,7 @@ module.exports = function(options) {
       logPrefix : 'BrowserSync',
       online    : false, // increases startup time 
     });
-    browserSync.watch(options.serve + '**/*.*').on('change', browserSync.reload);
+    browserSync.watch(path.join(options.serve, '**/*.*'))
+      .on('change', browserSync.reload);
   };
 };

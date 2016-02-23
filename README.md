@@ -10,14 +10,13 @@ This project template will work for you if:
 
 ## Noticeable features
 - lazy gulp modules load
-- lots of caching and speed optimizing
 - webpack with babel for js
-- tasks for: templates, styles, rasterized images, svg, any other static assets
-- combined tasks for full dev launch and quick start on existing project
+- tasks for: templates, styles, svg, rasterized images, static assets
+- combined tasks for full dev launch and quick re-launch on existing project
+- webpack works as webpack does, not as gulp stream, also uses its watcher
 - ```NODE_ENV=dev|prod|{whatever}```, default - dev
 - ```NODE_WATCH=true|false```, default - true
 - ```NODE_DEBUG=true|false```, default - false (will write debug details for tasks)
-- webpack works as webpack does, not as gulp stream, also uses built in watcher
 
 ## Steps to start
 - clone the repo
@@ -30,9 +29,8 @@ This project template will work for you if:
 Starting from version 0.1.0 of this project, Gulp v4 is used, which is still in alpha.
 If you are not willing to install the alpha version globally, you should run all the tasks with your local installation like this ```./node_modules/.bin/gulp <yourtask>```.
 The better option is to add ```./node_modules/.bin``` to your path variable, so when you call ```gulp``` in the project folder - local gulp will be used, otherwise - global (if you have it installed globally). 
-Also you can setup tasks to run with ```npm script```, something like that ```"<taskName>" : "./node_modules/.bin/gulp <yourtask>"```.
+Also you can setup tasks to run with ```npm script```, something like that ```"<taskName>" : "./node_modules/.bin/gulp <yourtask>"```, check ```package.json``` for existing tasks.
 
-*gulp-sass does not work well with gulp4 yet, so for now you should use gulp-ruby-sass with sass being installed from ruby gem*
 
 ## TODO
 - webpack dev server and hot module replacement

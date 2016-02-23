@@ -1,13 +1,10 @@
 'use strict';
 
 const 
-  gulp          = require('gulp'),
   gulplog       = require('gulplog'),
   path          = require('path'),
-  combiner      = require('stream-combiner2').obj,
   webpack       = require('webpack'),
-  notifier      = require('node-notifier'),
-  $             = require('gulp-load-plugins')();
+  notifier      = require('node-notifier');
 
 
 
