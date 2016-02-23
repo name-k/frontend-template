@@ -2,7 +2,7 @@
 
 const
   gulp        = require('gulp'),
-  plugins     = require('gulp-load-plugins')(),
+  $           = require('gulp-load-plugins')(),
   path        = require('path'),
   combiner    = require('stream-combiner2');
 
