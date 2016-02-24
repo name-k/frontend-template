@@ -53,11 +53,16 @@ lazyTask('styles', './tasks/styles', {
   dest : config.paths.styles.dest,
 });
 
-lazyTask('templates', './tasks/templates', {
+lazyTask('jade', './tasks/templates', {
   src  : config.paths.templates.src,
   dest : config.paths.templates.dest,
   data : require(path.resolve(config.dir.tpl, 'content-data/data.js')),
 });
+lazyTask('jade:mixins', './tasks/collectJadeMixins', {
+  dir : path.join(config.dir.tpl, 'mixins'),
+  collectionName : '_all'
+});
+gulp.task('templates', gulp.series('jade:mixins', 'jade'));
 
 lazyTask('fonts', './tasks/assets', {
   src : config.paths.fonts.src,
