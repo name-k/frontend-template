@@ -13,6 +13,8 @@ This template works best for you if:
 - you like to configure tiny details (not so beautiful, but more flexible)
 - you prefer to lint in your text editor (ST3 works best for me)
 
+*anyway you can configure and replace any module in the project*
+
 ## Noticeable features
 - lazy gulp modules load
 - webpack with babel for js
