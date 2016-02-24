@@ -1,13 +1,14 @@
 'use strict';
 
 const 
-  path = require('path'),
-  fs = require('fs');
+  path   = require('path'),
+  mkpath = require('mkpath'),
+  fs     = require('fs');
 
 module.exports  = function(options) {
   return function(callback) {
     return new Promise(function(resolve, reject) {
-      fs.readdir(path.resolve(options.dir), function(err, files) {
+      fs.readdir(options.dir, function(err, files) {
         if(err) {
           reject(err);
         } else {
@@ -22,12 +23,15 @@ module.exports  = function(options) {
             includes += 'include ' + path.replace(/\.jade/, '') + '\n';
           }
         });
+
+        mkpath.sync(path.dirname(options.outputFile));
+
         return fs.writeFile(
-          path.resolve(options.dir, options.collectionName) + '.jade', 
+          path.resolve(options.outputFile), 
           includes, 
           (err) => {
-            if(err){
-              reject(err);
+            if(err) {
+              console.error(err);
             }
           });
       })
