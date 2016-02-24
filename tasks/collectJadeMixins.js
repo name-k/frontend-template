@@ -18,9 +18,10 @@ module.exports  = function(options) {
     })
       .then((dirs) => {
         let includes = '';
-        dirs.forEach((path) => {
-          if(/^(?!_)/.test(path)) {
-            includes += 'include ' + path.replace(/\.jade/, '') + '\n';
+        dirs.forEach((el) => {
+          if(/^(?!_)/.test(el)) {
+            let oneInclude = path.join(options.dir, el.replace(/\.jade/, ''));
+            includes += 'include ../../' + oneInclude + '\n';
           }
         });
 

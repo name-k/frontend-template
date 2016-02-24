@@ -60,7 +60,7 @@ lazyTask('jade', './tasks/templates', {
 });
 lazyTask('jade:mixins', './tasks/collectJadeMixins', {
   dir : path.join(config.dir.tpl, 'mixins'),
-  outputFile : path.resolve(process.cwd(), config.dir.tmp, 'templates/mixins.jade')
+  outputFile : path.join(config.dir.tmp, 'templates/mixins.jade')
 });
 gulp.task('templates', gulp.series('jade:mixins', 'jade'));
 
