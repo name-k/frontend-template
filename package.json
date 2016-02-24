@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "dependencies": {
     "jquery": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "normalize.css": "^3.0.3"
   },
   "devDependencies": {
     "babel-core": "*",

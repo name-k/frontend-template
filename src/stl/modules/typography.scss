@@ -1,0 +1,50 @@
+// titles
+h1, .title_h1,
+h2, .title_h2,
+h3, .title_h3,
+h4, .title_h4,
+h5, .title_h5,
+h6, .title_h6 {}
+
+// titles primary group
+h1, .title_h1,
+h2, .title_h2,
+h3, .title_h3 {}
+
+// titles secondary
+h4, .title_h4,
+h5, .title_h5,
+h6, .title_h6 {}
+
+// titles all
+h1, .title_h1 {}
+h2, .title_h2 {}
+h3, .title_h3 {}
+h4, .title_h4 {}
+h5, .title_h5 {}
+h6, .title_h6 {}
+
+// paragraphs
+p {}
+
+// italics
+em, i {}
+
+// bolds
+b, strong {
+  font-weight: 600;
+}
+
+// lists
+ul, ol {}
+li {}
+
+// links
+a {}
+a {}
+a:visited {}
+a:hover {}
+a:active {}
+
+
+

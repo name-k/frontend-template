@@ -1,0 +1,34 @@
+@mixin bd-0($color:red) {
+  border: 1px solid $color;
+}
+
+.deb-b-1 {
+  @include bd-0(red);
+}
+.deb-b-2 {
+  @include bd-0(blue);
+}
+.deb-b-3 {
+  @include bd-0(green);
+}
+.deb-b-4 {
+  @include bd-0(brown);
+}
+.deb-b-5 {
+  @include bd-0(orange);
+}
+.deb-b-6 {
+  @include bd-0(yellow);
+}
+.deb-b-7 {
+  @include bd-0(black);
+}
+.deb-b-8 {
+  @include bd-0(violet);
+}
+
+.deb-box {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
