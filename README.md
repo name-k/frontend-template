@@ -1,28 +1,33 @@
 # Frontend project template
-This template is created and supported according to my own tasks and needs. 
-You are welcome to use it, but I'm not really into writing full docs right now. 
-Though, it should be easy enough to look at gulpfile.js and ./tasks to understand what is going on.
+This template is created and supported according to my tasks and needs. 
+You are welcome to use it, but I'm not really into writing full docs. 
+Though, it should be easy enough to look figure it out after checking gulpfile.js and ./tasks/*.js files.
 
-This project template will work for you if:
-- you write JS in ES2015 and modularize everything
-- you use eslint for linting in your editor, not in the console (ST3 works best for me)
-- you like to configure every tiny detail (like myself)
+*Meanwhile, I did write some description.*
+
+This template works best for you if:
+- you familiar with gulp and webpack
+- you use SCSS/SASS for styles
+- you use Jade for templates
+- you write JS in ES2015 and modularize your code
+- you like to configure tiny details (not so beautiful, but more flexible)
+- you prefer to lint in your text editor (ST3 works best for me)
 
 ## Noticeable features
 - lazy gulp modules load
 - webpack with babel for js
 - tasks for: templates, styles, svg, rasterized images, static assets
-- combined tasks for full dev launch and quick re-launch on existing project
+- combined tasks for full dev launch and quick re-launch on existing project (check with ```gulp --tasks```)
 - webpack works as webpack does, not as gulp stream, also uses its watcher
-- ```NODE_ENV=dev|prod|{whatever}```, default - dev
-- ```NODE_WATCH=true|false```, default - true
-- ```NODE_DEBUG=true|false```, default - false (will write debug details for tasks)
+- ```NODE_ENV=dev|prod|{whatever}```, by default acts like if 'dev'
+- ```NODE_WATCH=true|false```, by default acts like if 'true'
+- ```NODE_DEBUG=true|false```, by default acts like if 'false' (enables gulp-debug)
 
 ## Steps to start
 - clone the repo
 - ```npm i```
 - setup paths in ./build.config.js
-- setup webpack config in ./tasks/js.js
+- setup webpack config in ./tasks/js.js (not required)
 - ```gulp dev```, should use local gulp or install gulp#4 globally, read more below
 
 ## Gulp#4
@@ -37,6 +42,6 @@ Also you can setup tasks to run with ```npm script```, something like that ```"<
 - revision naming for longterm caching support
 - get rid of jquery, completely (also includes update of all plugins in ./src/js/
 plugins)
-- wrap some more of my everyday-useful scripts with ES6 classes and optimize that what already exist (because they are not)
-- move plugins to separate npm packages for each plugin
+- wrap some more of my everyday-used scripts with ES6 classes and optimize those which already exist (because they are not)
+- upload plugins as npm packages
 
