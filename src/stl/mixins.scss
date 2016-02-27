@@ -10,7 +10,7 @@
 }
 
 
-@mixin image-holder() {
+@mixin image-centered() {
   position: relative;
   overflow: hidden;
   img {
@@ -26,9 +26,4 @@
     width: auto;
     height: auto;
   }
-}
-@mixin translate-l() {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
 }
