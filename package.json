@@ -1,13 +1,12 @@
 {
   "name": "frontend-project-template",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
-    "foundation-sites": "^6.2.0-rc.1",
     "jquery": "*",
     "lodash": "*",
-    "normalize.css": "^3.0.3"
+    "normalize.css": "*"
   },
   "devDependencies": {
     "babel-core": "*",
@@ -39,7 +38,7 @@
     "gulp-svg-symbols": "*",
     "gulp-util": "*",
     "gulplog": "*",
-    "mkpath": "^1.0.0",
+    "mkpath": "*",
     "node-notifier": "*",
     "stream-combiner2": "*",
     "trace": "*",
