@@ -15,7 +15,7 @@ This template works best for you if:
 
 *anyway you can configure and replace any module in the project*
 
-## Noticeable features
+## Things to notice
 - lazy gulp modules load
 - webpack with babel for js
 - tasks for: templates, styles, svg, rasterized images, static assets
