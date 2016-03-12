@@ -1,95 +1,96 @@
-import $ from 'jquery';
+import assign from 'lodash/assign';
+import isElement from 'lodash/isElement';
+import MediaEvents from 'plugins/media-events';
 
 export default class MobileNav {
 
   constructor(options) {
 
-    this._selectors = {
-      header  : '[data-component=header]',
-      trigger : '[data-component="mobile-nav-trigger"]',
-      nav     : '[data-component="mobile-nav"]',
+    let defaults = {
+      elements : {
+        container : '[data-component="mobile-nav"]',
+        trigger   : '[data-mobile-nav="trigger"]',
+        menu      : '[data-mobile-nav="menu"]',  
+      },
+      animation        : false,
+      hideAfter        : false,
+      closeOnEsc       : true,
+      closeOnMissClick : true,
     };
 
-    this._dom = {
-      header  : $(this._selectors.header),
-      trigger : $(this._selectors.trigger),
-      nav     : $(this._selectors.nav),
+    this.config = assign(defaults, options);
+
+
+    let 
+      q = document.querySelector.bind(document),
+      e = this.config.elements;
+
+    this.dom = {
+      container : isElement(e.container) ? e.container : q(e.container),
+      trigger   : isElement(e.trigger) ? e.trigger : q(e.trigger),
+      menu      : isElement(e.menu) ? e.menu : q(e.menu),
     };
 
-    this.visibilityFlag = false;
+
+    this.flags = {
+      isVisible : false,
+      isAnimating : false,
+      isMediaSensetive : this.config.hideAfter || false,
+    };
 
     this.init();
+
   }
 
   init() {
 
-    if(!this._dom.nav.length) {
+    if(this.flags.isMediaSensetive) {
+      let mediaEvents = new MediaEvents({
+        breakpoints        : [this.config.hideAfter],
+        names              : ['before', 'after'],
+        scope              : this.dom.container,
+        onInit             : (box) => {},
+        onBreakpointChange : (box, breakpointName) => {
+          if (breakpointName == 'after') {
+            this.hide(1);
+          }
+        }
+      });
+    }
+
+
+    if(!this.dom.menu && !this.dom.container && !this.dom.trigger) {
+      console.warn('Some of the HTML nodes missing');
       return false;
     }
     
-    this._dom.trigger.on('click.mobileNav', (event) => {
+    this.dom.trigger.addEventListener('click', (event) => {
       event.preventDefault();
-
-
-      if(window.currentMedia == 'large') {
-        return false;
-      }
-
-      if(this.visibilityFlag) {
-        this.hide();
-      }
-      else {
-        this.show(); 
-      }
-      
-    });
-
-    // disabled because of bug
-    // it was always found a click ounside of the nav
-    // bad target check
-    // $(document).on('click.mobileNavMissed', (event) => {
-    //   event.preventDefault();
-
-    //   if(window.currentMedia == 'large') {
-    //     return false;
-    //   }
-
-    //   let $target = $(event.target);
-    //   if($target.is(':not(' + this._selectors.nav + ')') || $target.is(':not(' + this._selectors.header + ')')) {
-    //     if(this.visibilityFlag) {
-    //       this.hide();
-    //     }
-    //   }
-    // });
-
-    // always show on large media size
-    $(window).on('mediaChange', (event, newMedia) => {
-      if(newMedia == 'large' && !this.visibilityFlag) {
-        this.show(1);
-      } else if (newMedia != 'large') {
-        this.hide(1);
-      }
+      this.flags.isVisible ? this.hide() : this.show();
     });
   }
 
-
-  show(delay = 300) {
-    if(this._dom.nav.is(':animated')) {
-      return false;
-    }
-    // this._dom.nav.fadeIn(delay);
-    this._dom.header.addClass('has-mobile-nav');
-    this.visibilityFlag = true;
-  }
-
-  hide(delay = 300) {
-    if(this._dom.nav.is(':animated')) {
-      return false;
-    }
-    // this._dom.nav.fadeOut(delay);
-    this._dom.header.removeClass('has-mobile-nav');
-    this.visibilityFlag = false;
+  animate(action = () => {}) {
+    if(this.flags.isAnimating) return false;   
+    this.flags.isAnimating = true;
+    action();
+    this.flags.isAnimating = false;
   }
 
 
+  show(delay = 0) {
+    setTimeout(() => {
+      this.animate();
+    }, delay);
+    this.flags.isVisible = true;
+    this.dom.container.classList.add('has-mobile-nav');
+  }
+
+  hide(delay = 0) {
+    setTimeout(() => {
+      this.animate();
+    }, delay);
+    this.flags.isVisible = false;
+    this.dom.container.classList.remove('has-mobile-nav');
+  }
 }
