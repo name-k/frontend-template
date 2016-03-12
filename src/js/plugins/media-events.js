@@ -41,7 +41,7 @@ export default class MediaEvents {
 
   complementNames() {
     for (let i = this.config.names.length; i < this.config.breakpoints.length + 1; i++) {
-      this.config.names.push(`breakpoint-${this.config.breakpoints[i-1] || 'min'}-${this.config.breakpoints[i] || 'max'}`);
+      this.config.names.push(`breakpoint-${this.config.breakpoints[i - 1] || 'min'}-${this.config.breakpoints[i] || 'max'}`);
     }
   }
 

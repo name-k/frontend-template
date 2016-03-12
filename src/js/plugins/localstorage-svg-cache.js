@@ -1,7 +1,7 @@
 export default class LoadSVG {
   constructor(path) {
 
-    this.path = path;
+    this.path     = path;
     this.revision = 1;
 
     if(!document.createElementNS || 
@@ -11,11 +11,12 @@ export default class LoadSVG {
 
     this.isLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 
-    this.insert = this.insert.bind(this);
+    this.insert   = this.insert.bind(this);
     this.insertIT = this.insertIT.bind(this);
-    this.init = this.init.bind(this);
+    this.init     = this.init.bind(this);
 
     this.init();
+
   }
 
   init() {
