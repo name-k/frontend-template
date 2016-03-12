@@ -5,3 +5,7 @@ Build:
 Modules:
   ☐ js module to lazyload google fonts
   ☐ get rid of jquery in plugins
+
+
+Consider:
+  ☐ Skeleton SASS Framework
