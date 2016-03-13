@@ -1,52 +1,51 @@
 import assign from 'lodash/assign';
+import isElement from 'lodash/isElement';
+import each from 'lodash/each';
 
-import $ from 'jquery';
-
-export default class Slider {
+export default class SlideGallery {
   
-  constructor(selectors) {
+  constructor(options) {
 
-    // assing default settings with user provided settings
-    this._config = assign({
-      container        : '[data-component="slider"]',
-      slides           : '[data-component-part="content"]',
-      nav              : '[data-component-part="navigation"]',
-      navButton        : '[data-component-part="navigation-button"]',
-      prev             : '[data-component-part="go-prev"]',
-      next             : '[data-component-part="go-next"]',
-      pagination       : '[data-component-part="pagination"]',
-      paginationButton : '[data-component-part="pagination-button"]',
-    }, selectors || {});
-
-    // this._dom - is to keep dom nodes of current slider instanse
-    this._dom = {};
-    this._slidesLength = null;
-    this.autoChangeTimer = null;
-
-    // run initialization
+    const defaults = {
+      elements : {
+        container        : '[data-component="slide-gallery"]',
+        slidesContainer  : '[data-slide-gallery="content"]',
+        nav              : '[data-slide-gallery="navigation"]',
+        // navButton        : '[data-slide-gallery="navigation-button"]',
+        prev             : '[data-slide-gallery="go-prev"]',
+        next             : '[data-slide-gallery="go-next"]',
+        pagination       : '[data-slide-gallery="pagination"]',
+        // paginationButton : '[data-slide-gallery="pagination-button"]',
+      },
+      classList : {
+        active      : 'is-active',
+        prev        : 'is-prev',
+        next        : 'is-next',
+        inAnimation : 'is-animating'
+      },
+      timeout   : false,
+      animation : false,
+    };
+    this.config = assign(defaults, options || {});
     this.init();
   }
 
 
-  init() {
-    let box = $(this._config.container);
 
-    if(!box.length) {
+
+  init() {
+    this.dom = this.getDOMNodes(this.config.elements);
+    if(!this.dom.container) {
+      console.warn('No wrapper node found for SlideGallery on the page.');
       return false;
     }
-
-    // find all dom nodes of current slider
-    this._dom.container  = box;
-    this._dom.pagination = box.find(this._config.pagination);
-    this._dom.slides     = box.find(this._config.slides).children();
-    this._dom.nav        = box.find(this._config.nav);
-    this._dom.goPrev     = box.find(this._config.prev);
-    this._dom.goNext     = box.find(this._config.next);
     
     this.createPagination();
 
-    this._slidesLength = this._dom.slides.length - 1;
+    this.slidesLength = this.dom.slides.length - 1;
     this.setupEvents();
+
+
 
     // initiate a tam switch to index 1 - 1st element
     this.changeSliderContent(null, 0, 0);
@@ -54,54 +53,96 @@ export default class Slider {
   }
 
 
-  getCurrentIndex() {
-    return this._dom.slides.filter('.active').index();
+  getDOMNodes(nodesOrSelectors) {
+    let nodes = this.dom || {};
+    each(nodesOrSelectors, (val, key) => {
+      nodes[key] = isElement(val) ? val : document.querySelector(val);
+    });
+    nodes.slides = [].slice.call(nodes.slidesContainer.childNodes).filter((e) => {
+      return e.nodeType == 1;
+    });
+    return nodes;
   }
 
 
   createPagination() {
-    for (let i = 0; i < this._dom.slides.length; i++) {
-      let $button = $('<button />')
-        .attr('data-component-part', 'pagination-button')
-        .appendTo(this._dom.pagination);
+    if(this.dom.slides.length < 1 && !this.dom.pagination) {
+      console.warn('Only one slide or none');
+      return false;
+    }
+
+    this.dom.paginationItems = [];
+    for (let i = 0; i < this.dom.slides.length; i++) {
+      let button = document.createElement('button');
+      this.dom.paginationItems.push(button);
+      button.addEventListener('click', () => {
+        this.switchByIndex(i);
+      });
+      this.dom.pagination.appendChild(button);
     }
   }
+
+
+
+
+  getCurrentIndex() {
+    let res = [].slice.call(this.dom.slides).findIndex((el, i) => {
+      if(el.nodeType == 1 && el.classList.contains('active')) {
+        console.log(el.classList);
+        console.log(el.classList.contains('active'));
+        return true;
+      }
+    });
+    return res;
+  }
+
+
+  
 
 
   setupEvents() {
     let self = this;
 
     // click on the slider navigation
-    this._dom.container
-      .on('click.stopAutoChange', function(e) {
-        self.autoChangeStop();
-      })
-      .on('click.navClick', this._config.navButton, function(e) {
-        e.preventDefault();
+    this.dom.container.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.autoChangeStop();
+    });
 
-        let 
-          currentIndex = self._dom.slides.filter('.active'),
-          $el = $(this),
-          forward = ($el.data('direction') === 'next');
 
-        if(forward) {
-          self.switchNext();
-        }
-        else {
-          self.switchToPrev();
-        }
-      })
-      .on('click.navClick', this._config.paginationButton, function(e) {
-        e.preventDefault();
-        self.switchByIndex($(this).index());
-      });
+    this.dom.nav.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.switchByArrowNavigation(e.target);
+    });
+
+    this.dom.pagination.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.switchByPagination(e.target);
+    });
   }
+
+  switchByArrowNavigation(target) {
+    if(target == this.dom.next) {
+      this.switchNext();
+    }
+    else if(target == this.dom.prev) {
+      this.switchToPrev();
+    }
+  }
+
+  switchByPagination(target) {
+    this.switchByIndex(this.dom.paginationItems.indexOf(target));
+  }
+
+
+
+
 
 
   switchToPrev() {
     let 
       currentIndex = this.getCurrentIndex(),
-      newIndex = (currentIndex < 0) ? this._slidesLength : currentIndex - 1;
+      newIndex = (currentIndex <= 0) ? this.slidesLength : currentIndex - 1;
       this.switchByIndex(newIndex);
   }
 
@@ -109,15 +150,15 @@ export default class Slider {
   switchNext() {
     let 
       currentIndex = this.getCurrentIndex(),
-      newIndex = (currentIndex >= this._slidesLength) ? 0 : currentIndex + 1;
+      newIndex = (currentIndex >= this.slidesLength) ? 0 : currentIndex + 1;
       this.switchByIndex(newIndex);
   }
 
 
   switchByIndex(newIndex, forward = true) {
     let currentIndex = this.getCurrentIndex();
-    if(newIndex === currentIndex || 
-      this._dom.container.filter(':animated').length) {
+
+    if(newIndex == currentIndex) {
       return false;
     }
     else {
@@ -127,22 +168,21 @@ export default class Slider {
 
 
   changeSliderContent(currentIndex = false, newIndex = 0, animationDuration = 300) {
-    let self = this;
 
+    if(!isNaN(parseFloat(currentIndex)) && isFinite(currentIndex) && currentIndex >= 0) {
+      this.dom.slides[currentIndex].classList.remove('active');
+    }
+
+    this.dom.slides[newIndex].classList.add('active');
     // do hiding part
-    this._dom.slides.eq(currentIndex).fadeOut(100, function() {
+  
 
-      let $next = self._dom.slides.eq(newIndex);
-      self._dom.slides.not(':eq(newIndex)').removeClass('active');
-
-      // do showing part as a callback of hiding
-      $next.fadeIn(animationDuration, function () {
-        $(this).addClass('active');
-      });
-      // 
-      self._dom.pagination.children()
-        .removeClass('active')
-        .eq(newIndex).addClass('active');
+    this.dom.paginationItems.forEach((el, i) => {
+      if(newIndex == i) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
+      }
     });
   }
 
