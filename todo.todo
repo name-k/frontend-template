@@ -1,11 +1,22 @@
+Must change:
+  ☐ should include config examples for each plugin
+
 Build: 
-  ✔ minify svg output @done (2016-02-19 23:45)
   ☐ make rev names for longterm caching
 
 Modules:
-  ☐ js module to lazyload google fonts
   ☐ get rid of jquery in plugins
 
 
 Consider:
   ☐ Skeleton SASS Framework
+  ☐ Consider switching to stylus with config/styles.json as global styles config for Sass (if any sass framework required) and stylus
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+✔ js module to lazyload google fonts @done (2016-03-24 02:22) @project(Modules)
+✔ fonts load plugin should be named in common @done (2016-03-24 02:22) @project(Must change)
+✔ work on task names @done (2016-03-24 02:19) @project(Must change)
+✔ webpack short logging in non-debug mode @done (2016-03-24 02:19) @project(Must change)
+✔ create style mixin collector @done (2016-03-24 02:19) @project(Must change)
+✔ minify svg output @done (2016-02-19 23:45) @project(Build)
