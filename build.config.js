@@ -22,11 +22,11 @@ dir.svg    = path.join(dir.src, 'img/svg');
 dir.imggag = path.join(dir.src, 'img/pic');
 
 let flags = {};
-flags.mode        = process.env.NODE_ENV || 'dev';
-flags.isDev       = !process.env.NODE_ENV || process.env.NODE_ENV == 'dev';
-flags.isProd      = process.env.NODE_ENV == 'prod';
-flags.debug       = process.env.NODE_DEBUG == 'true';
-flags.shouldWatch = !process.env.NODE_WATCH || process.env.NODE_WATCH == 'true';
+flags.mode        = process.env.NODE_ENV || 'development';
+flags.isDev       = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
+flags.isProd      = process.env.NODE_ENV == 'production';
+flags.debug       = process.env.DEBUG == 'true';
+flags.shouldWatch = !process.env.WATCH || process.env.NODE_WATCH == 'true';
 
 module.exports = {
   dir, flags,
