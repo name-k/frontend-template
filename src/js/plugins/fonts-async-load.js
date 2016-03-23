@@ -1,6 +1,15 @@
 export default class GoogleFontsAsync {
   constructor(options) {
     this.config = options;
+
+    // // config exaple
+    // google: { 
+    //   families: [
+    //     'Open+Sans:400,600:latin,cyrillic',
+    //     'Ubungu:400,600:latin,cyrillic',
+    //   ] 
+    // }
+
     this.init();
   }
   init() {
