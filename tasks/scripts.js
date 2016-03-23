@@ -77,7 +77,18 @@ module.exports = function(config) {
         gulplog.error(err);
       }
       else {
-        gulplog.info(stats.toString({colors : true}));
+        gulplog.info(stats.toString({
+          colors       : true,
+          hash         : config.flags.debug,
+          cached       : config.flags.debug,
+          cachedAssets : config.flags.debug,
+          chunkOrigins : config.flags.debug,
+          chunkModules : config.flags.debug,
+          // chunks       : false,
+          // assets       : false,
+          // version      : false,
+          // timings      : false,
+        }));
       }
 
       if(!config.shouldWatch && err) {
