@@ -1,6 +1,6 @@
 {
   "name": "frontend-project-template",
-  "version": "0.2.1",
+  "version": "0.2.5",
   "description": "",
   "main": "gulpfile.js",
   "dependencies": {
@@ -47,10 +47,10 @@
   "scripts": {
     "test": "echo \"No tests provided\"",
     "dev": "./node_modules/.bin/gulp dev",
-    "debug": "NODE_DEBUG=true gulp dev",
-    "fast": "./node_modules/.bin/gulp fastdev",
-    "prod": "NODE_ENV=prod NODE_WATCH=false gulp build",
-    "win-prod": "SET \"NODE_ENV=prod\" && SET \"NODE_WATCH=false\" && gulp build"
+    "debug": "DEBUG=true gulp dev",
+    "fast": "./node_modules/.bin/gulp fast",
+    "prod": "NODE_ENV=production WATCH=false gulp build",
+    "win-prod": "SET \"NODE_ENV=production\" && SET \"WATCH=false\" && gulp build"
   },
   "repository": {
     "type": "git",
