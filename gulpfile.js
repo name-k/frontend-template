@@ -111,11 +111,11 @@ gulp.task('watch:main', function() {
   if(config.flags.shouldWatch) {
     gulp.watch(config.paths.js.watch, gulp.series('js'));
     gulp.watch(config.paths.styles.watch, gulp.series('styles:raw'))
-      .on('add', () => gulp.series('styles:includes'))
-      .on('unlink', () => gulp.series('styles:includes'));
+      .on('add', gulp.series('styles:includes'))
+      .on('unlink', gulp.series('styles:includes'));
     gulp.watch(config.paths.templates.watch, gulp.series('templates:raw'))
-      .on('add', () => gulp.series('templates:includes'))
-      .on('unlink', () => gulp.series('templates:includes'));
+      .on('add', gulp.series('templates:includes'))
+      .on('unlink', gulp.series('templates:includes'));
   }
 });
 gulp.task('watch:assets', function() {
