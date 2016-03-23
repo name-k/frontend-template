@@ -35,9 +35,21 @@ lazyTask('clean', './tasks/clean', {
   src : [config.dir.build, config.dir.tmp]
 });
 
-lazyTask('images', './tasks/images', {
+
+// assets
+lazyTask('img:design', './tasks/images', {
   src  : config.paths.img.src,
   dest : config.paths.img.dest
+});
+
+lazyTask('img:gag', './tasks/assets', {
+  src : config.paths.imggag.src,
+  dest : config.paths.imggag.dest,
+});
+
+lazyTask('fonts', './tasks/assets', {
+  src : config.paths.fonts.src,
+  dest : config.paths.fonts.dest,
 });
 
 lazyTask('svg', './tasks/svg', {
@@ -48,55 +60,74 @@ lazyTask('svg', './tasks/svg', {
   cssTemplate : config.paths.svg.templates.css,
 });
 
-lazyTask('styles', './tasks/styles', {
+
+// scripts
+lazyTask('js', './tasks/scripts', config);
+
+
+// styles
+lazyTask('styles:raw', './tasks/styles', {
   src : config.paths.styles.src,
   dest : config.paths.styles.dest,
 });
 
-lazyTask('jade', './tasks/templates', {
+lazyTask('styles:includes', './tasks/collectFilenames', {
+  dir        : [
+    path.join(config.dir.stl, 'core'),
+    path.join(config.dir.stl, 'mixins'),
+    path.join(config.dir.stl, 'modules'),
+    path.join(config.dir.stl, 'components'),
+    path.join(config.dir.stl, 'partials'),
+    path.join(config.dir.stl, 'pages'),
+  ],
+  outputFile : path.join(config.dir.tmp, 'styles/includes.scss'),
+  prepend    : '@import "../../',
+  append     : '";\n',
+});
+
+
+// templates
+lazyTask('templates:raw', './tasks/templates', {
   src  : config.paths.templates.src,
   dest : config.paths.templates.dest,
   data : require(path.resolve(config.dir.tpl, 'content-data/data.js')),
 });
-lazyTask('jade:mixins', './tasks/collectJadeMixins', {
-  dir : path.join(config.dir.tpl, 'mixins'),
-  outputFile : path.join(config.dir.tmp, 'templates/mixins.jade')
-});
-gulp.task('templates', gulp.series('jade:mixins', 'jade'));
 
-lazyTask('fonts', './tasks/assets', {
-  src : config.paths.fonts.src,
-  dest : config.paths.fonts.dest,
-});
-lazyTask('imggag', './tasks/assets', {
-  src : config.paths.imggag.src,
-  dest : config.paths.imggag.dest,
+lazyTask('templates:includes', './tasks/collectFilenames', {
+  dir        : path.join(config.dir.tpl, 'mixins'),
+  outputFile : path.join(config.dir.tmp, 'templates/mixins.jade'),
+  prepend    : 'include ../../',
+  append     : '\n',
 });
 
-lazyTask('js', './tasks/js', config);
 
 
+gulp.task('styles', gulp.series('styles:includes', 'styles:raw'));
+gulp.task('templates', gulp.series('templates:includes', 'templates:raw'));
 
 
-
-
+// watch
 gulp.task('watch:main', function() {
   if(config.flags.shouldWatch) {
     gulp.watch(config.paths.js.watch, gulp.series('js'));
-    gulp.watch(config.paths.styles.watch, gulp.series('styles'));
-    gulp.watch(config.paths.templates.watch, gulp.series('templates'));
+    gulp.watch(config.paths.styles.watch, gulp.series('styles:raw'))
+      .on('add', () => gulp.series('styles:includes'))
+      .on('unlink', () => gulp.series('styles:includes'));
+    gulp.watch(config.paths.templates.watch, gulp.series('templates:raw'))
+      .on('add', () => gulp.series('templates:includes'))
+      .on('unlink', () => gulp.series('templates:includes'));
   }
 });
 gulp.task('watch:assets', function() {
   if(config.flags.shouldWatch) {
-      gulp.watch(config.paths.img.watch, gulp.series('images'));
+      gulp.watch(config.paths.img.watch, gulp.series('img:design'));
       gulp.watch(config.paths.svg.watch, gulp.series('svg'))
         .on('unlink', function(filepath) {
           $.remember('svg').forget(path.resolve(filepath));
           delete $.cached.caches.svg[path.resolve(filepath)];
         });
       gulp.watch(config.paths.fonts.watch, gulp.series('fonts'));
-      gulp.watch(config.paths.imggag.watch, gulp.series('imggag'));
+      gulp.watch(config.paths.imggag.watch, gulp.series('img:gag'));
   }
 });
 gulp.task('watch', gulp.parallel('watch:main', 'watch:assets'));
@@ -105,12 +136,12 @@ gulp.task('watch', gulp.parallel('watch:main', 'watch:assets'));
 
 
 gulp.task('build:main', gulp.parallel('styles', 'templates', 'js'));
-gulp.task('build:assets', gulp.parallel('fonts', 'images', 'svg', 'imggag'));
+gulp.task('build:assets', gulp.parallel('fonts', 'img:design', 'svg', 'img:gag'));
 gulp.task('build', gulp.parallel('build:main', 'build:assets'));
 
 
 gulp.task('dev', gulp.series('clean', 'build', gulp.parallel('watch', 'server')));
-gulp.task('fastdev', gulp.series('build:main', gulp.parallel('watch:main', 'server')));
+gulp.task('fast', gulp.series('build:main', gulp.parallel('watch', 'server')));
 
 
 
