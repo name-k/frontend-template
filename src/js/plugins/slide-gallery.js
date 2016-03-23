@@ -36,8 +36,10 @@ export default class SlideGallery {
   init() {
     this.dom = this.getDOMNodes(this.config.elements);
     if(!this.dom.container) {
-      console.warn('No wrapper node found for SlideGallery on the page.');
+      console.warn('No parent-wrapper DOMNode found for SlideGallery component on the page.');
       return false;
+    } else {
+      // console.log();
     }
     
     this.createPagination();
@@ -58,9 +60,11 @@ export default class SlideGallery {
     each(nodesOrSelectors, (val, key) => {
       nodes[key] = isElement(val) ? val : document.querySelector(val);
     });
-    nodes.slides = [].slice.call(nodes.slidesContainer.childNodes).filter((e) => {
-      return e.nodeType == 1;
-    });
+    if(nodes.slidesContainer) {
+      nodes.slides = [].slice.call(nodes.slidesContainer.childNodes).filter((e) => {
+        return e.nodeType == 1;
+      });
+    }
     return nodes;
   }
 
@@ -86,11 +90,10 @@ export default class SlideGallery {
 
 
   getCurrentIndex() {
-    let res = [].slice.call(this.dom.slides).findIndex((el, i) => {
+    let res = 0;
+    [].slice.call(this.dom.slides).forEach((el, i) => {
       if(el.nodeType == 1 && el.classList.contains('active')) {
-        console.log(el.classList);
-        console.log(el.classList.contains('active'));
-        return true;
+        res = i;
       }
     });
     return res;
@@ -109,16 +112,27 @@ export default class SlideGallery {
       this.autoChangeStop();
     });
 
-
-    this.dom.nav.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.switchByArrowNavigation(e.target);
-    });
-
-    this.dom.pagination.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.switchByPagination(e.target);
-    });
+    if(this.dom.nav) {
+      this.dom.nav.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(e.target == this.dom.nav) {
+          return false;
+        } else {
+          this.switchByArrowNavigation(e.target);
+        }
+      });
+    }
+    
+    if(this.dom.pagination) {
+      this.dom.pagination.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(e.target == this.dom.pagination) {
+          return false;
+        } else {
+          this.switchByPagination(e.target);
+        }
+      });
+    }
   }
 
   switchByArrowNavigation(target) {
