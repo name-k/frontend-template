@@ -11,25 +11,25 @@ This template works best for you if:
 - you use Jade for templates
 - you write JS in ES2015 and modularize your code
 - you like to configure tiny details (not so beautiful, but more flexible)
-- you prefer to lint in your text editor (ST3 works best for me)
+- you prefer to lint in your text editor
 
 *anyway you can configure and replace any module in the project*
 
 ## Things to notice
 - lazy gulp modules load
 - webpack with babel for js
-- tasks for: templates, styles, svg, rasterized images, static assets
+- tasks for: templates, styles, svg, rasterized images, static assets, collecting includes
 - combined tasks for full dev launch and quick re-launch on existing project (check with ```gulp --tasks```)
 - webpack works as webpack does, not as gulp stream, also uses its watcher
-- ```NODE_ENV=dev|prod|{whatever}```, by default acts like if 'dev'
-- ```NODE_WATCH=true|false```, by default acts like if 'true'
-- ```NODE_DEBUG=true|false```, by default acts like if 'false' (enables gulp-debug)
+- ```NODE_ENV=development|production|{whatever}```, by default acts like if 'development'
+- ```WATCH=true|false```, by default acts like if 'true'
+- ```DEBUG=true|false```, by default acts like if 'false' (enables gulp-debug)
 
 ## Steps to start
 - clone the repo
 - ```npm i```
 - setup paths in ./build.config.js
-- setup webpack config in ./tasks/js.js (not required)
+- setup webpack config in ./tasks/scripts.js (not required)
 - ```gulp dev```, should use local gulp or install gulp#4 globally, read more below
 
 ## Gulp#4
