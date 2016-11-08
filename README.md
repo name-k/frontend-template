@@ -1,4 +1,4 @@
-# Frontend project template
+# Frontend project template (deprecated)
 This template is created and supported according to my tasks and needs. 
 You are welcome to use it, but I'm not really into writing full docs. 
 Though, it should be easy enough to look figure it out after checking gulpfile.js and ./tasks/*.js files.
